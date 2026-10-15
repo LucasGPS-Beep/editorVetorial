@@ -1,0 +1,81 @@
+@startuml pagina_1
+skinparam classAttributeIconSize 0
+title 01 / Modelos geométricos
+interface FormaGeometrica {
+  + adicionarPonto(Ponto)
+  + getPontos(): List<Ponto>
+  + getQuantidadePontos(): int
+  + getCorPreenchimentoHex(): String
+  + setCorPreenchimentoHex(String)
+  + getCorBordaHex(): String
+  + setCorBordaHex(String)
+  + getEspessuraBorda(): double
+  + setEspessuraBorda(double)
+  + getGroupId(): String
+  + setGroupId(String)
+  + calcularArea(): double
+  + calcularPerimetro(): double
+  + getCentroide(): Ponto
+  + contemPonto(double, double): boolean
+  + transladar(double, double)
+  + escalar(double)
+  + rotacionar(double)
+  + cisalhar(double, double)
+  + clonar(): FormaGeometrica
+}
+abstract class FormaBase {
+  # pontos: List<Ponto>
+  - corPreenchimentoHex: String
+  - corBordaHex: String
+  - espessuraBorda: double
+  - groupId: String
+  --
+  + getPontos(): List<Ponto>
+  + transladar(double, double)
+  + escalar(double)
+  + rotacionar(double)
+  + cisalhar(double, double)
+  + restaurarGeometria(FormaGeometrica)
+}
+class Ponto {
+  - x: double
+  - y: double
+  --
+  + Ponto(double, double)
+  + getX()/getY(): double
+  + mover(double, double)
+  + distancia(Ponto): double
+  + clonar(): Ponto
+}
+class Poligono {
+  + Poligono() / Poligono(List<Ponto>)
+  + adicionarPonto(Ponto)
+  + validar()
+  + editarVertice(int, Ponto)
+  + calcularArea()/calcularPerimetro(): double
+  + getCentroide(): Ponto
+  + clonar(): Poligono
+}
+class Circulo {
+  + Circulo(Ponto, double)
+  + {static} dePontosControle(List<Ponto>): Circulo
+  + calcularArea()/calcularPerimetro(): double
+  + contemPonto(double, double): boolean
+  + getCentroide(): Ponto
+  + clonar(): Circulo
+}
+class Quadrado {
+  + Quadrado(Ponto, double)
+  + clonar(): Quadrado
+}
+class Hexagono {
+  + Hexagono(Ponto, double)
+  + clonar(): Hexagono
+}
+FormaBase ..|> FormaGeometrica
+FormaBase *-- "0..*" Ponto
+Poligono --|> FormaBase
+Circulo --|> FormaBase
+Quadrado --|> Poligono
+Hexagono --|> Poligono
+@enduml

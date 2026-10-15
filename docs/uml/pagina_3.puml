@@ -1,0 +1,69 @@
+@startuml pagina_3
+skinparam classAttributeIconSize 0
+title 03 / Histórico, grupos e persistência
+class EditorContext {
+  + executarComando(Comando)
+  + desfazer()/refazer()
+  + agruparSelecionados()/desagruparSelecionados()
+  + transformarSelecionados(ModoFerramenta, double, double)
+  + exportarDocumento(): DocumentoVetorial
+  + carregarDocumento(DocumentoVetorial)
+}
+interface Comando {
+  + executar()
+}
+class HistoricoController {
+  - undoStack: Deque<List<FormaGeometrica>>
+  - redoStack: Deque<List<FormaGeometrica>>
+  --
+  + registrarEstado(List<FormaGeometrica>)
+  + desfazer(List<FormaGeometrica>): List<FormaGeometrica>
+  + refazer(List<FormaGeometrica>): List<FormaGeometrica>
+  + podeDesfazer()/podeRefazer(): boolean
+  + limpar()
+}
+class GrupoFormas {
+  - membros: List<FormaGeometrica>
+  --
+  + GrupoFormas(List<FormaGeometrica>)
+  + getCentroide(): Ponto
+  + transladar(double, double)
+  + escalar(double)
+  + rotacionar(double)
+  + cisalhar(double, double)
+  + calcularArea()/calcularPerimetro(): double
+  + clonar(): GrupoFormas
+}
+class DocumentoVetorial <<record>> {
+  larguraCanvas: double
+  alturaCanvas: double
+  gradeMagnetica: boolean
+  formas: List<FormaGeometrica>
+  --
+  + formas(): List<FormaGeometrica>
+}
+class ArquivoController {
+  - gson: Gson
+  --
+  + salvar(Path, DocumentoVetorial)
+  + carregar(Path): DocumentoVetorial
+}
+interface FormaGeometrica {
+  + clonar(): FormaGeometrica
+}
+class Limites <<record>> {
+  minX, minY, maxX, maxY: double
+  --
+  + {static} entre(Ponto, Ponto): Limites
+  + {static} de(FormaGeometrica): Limites
+  + contem(Limites): boolean
+}
+EditorContext ..> Comando
+EditorContext *-- HistoricoController
+EditorContext ..> GrupoFormas
+GrupoFormas *-- "1..*" FormaGeometrica
+GrupoFormas ..|> FormaGeometrica
+ArquivoController ..> DocumentoVetorial
+DocumentoVetorial o-- FormaGeometrica
+EditorContext ..> Limites
+@enduml

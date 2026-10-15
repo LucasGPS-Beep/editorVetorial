@@ -1,0 +1,60 @@
+@startuml pagina_4
+skinparam classAttributeIconSize 0
+title 04 / Interface e separação MVC
+class EditorContext {
+  + setAoRedesenhar(Runnable)
+  + setAoAtualizarStatus(Runnable)
+  + setAoAtualizarInterface(Runnable)
+  + setAoErro(Consumer<String>)
+}
+class ContainerApp {
+  - contexto: EditorContext
+  - areaDeDesenho: Canvas
+  - barraLateral: BarraLateralView
+  - painelStatus: PainelStatusView
+  - barraMenu: BarraMenuView
+  --
+  + start(Stage)
+  + inicializarEventos()
+  - redesenharCanvas()
+  - desenharForma(FormaGeometrica, boolean)
+}
+class ArquivoController {
+  + salvar(Path, DocumentoVetorial)
+  + carregar(Path): DocumentoVetorial
+}
+class BarraLateralView {
+  - contexto: EditorContext
+  --
+  + BarraLateralView(EditorContext)
+  + atualizar()
+  + atualizarDesenhoEmAndamento()
+  - construirSecaoFerramentas()
+  - construirSecaoTransformacoes()
+}
+class PainelStatusView {
+  - contexto: EditorContext
+  --
+  + PainelStatusView(EditorContext)
+  + atualizar()
+}
+class BarraMenuView {
+  - contexto: EditorContext
+  - arquivos: ArquivoController
+  - arquivoAtual: Path
+  --
+  + atualizar()
+  - salvarArquivo(boolean): boolean
+  - carregarArquivo()
+  - novoArquivo()
+  - confirmarAlteracoes(): boolean
+}
+ContainerApp ..> EditorContext
+ContainerApp *-- BarraLateralView
+ContainerApp *-- PainelStatusView
+ContainerApp *-- BarraMenuView
+BarraMenuView ..> ArquivoController
+BarraLateralView ..> EditorContext
+PainelStatusView ..> EditorContext
+BarraMenuView ..> EditorContext
+@enduml

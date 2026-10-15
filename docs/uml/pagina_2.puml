@@ -1,0 +1,87 @@
+@startuml pagina_2
+skinparam classAttributeIconSize 0
+title 02 / Ferramentas e padrão State
+class EditorContext {
+  - formas: List<FormaGeometrica>
+  - selecionados: List<FormaGeometrica>
+  - formaEmAndamento: FormaGeometrica
+  - ferramentaAtual: Ferramenta
+  - modo: ModoFerramenta
+  --
+  + setModo(ModoFerramenta)
+  + selecionar(FormaGeometrica, boolean)
+  + moverSelecionados(double, double)
+  + iniciarEdicao()/confirmarEdicao()
+  + cancelarEdicao()
+  + requestRedraw()/requestStatsUpdate()
+}
+interface Ferramenta {
+  + aoPressionarMouse(MouseEvent, EditorContext)
+  + aoArrastarMouse(MouseEvent, EditorContext)
+  + aoSoltarMouse(MouseEvent, EditorContext)
+  + aoClicar(MouseEvent, EditorContext)
+  + concluir(EditorContext)
+  + cancelar(EditorContext)
+  + temEdicaoEmAndamento(): boolean
+}
+enum ModoFerramenta {
+  SELECIONAR
+  POLIGONO
+  CIRCULO
+  QUADRADO
+  HEXAGONO
+  ESCALAR
+  ROTACIONAR
+  CISALHAR
+  EDITAR_VERTICE
+}
+class FerramentaDesenhar {
+  - poligono: Poligono
+  --
+  + aoClicar(MouseEvent, EditorContext)
+  + concluir(EditorContext)
+  + cancelar(EditorContext)
+}
+class FerramentaInserirForma {
+  - modo: ModoFerramenta
+  - centroInsercao: Ponto
+  --
+  + aoPressionarMouse(...)
+  + aoArrastarMouse(...)
+  + aoSoltarMouse(...)
+}
+class FerramentaSelecionar {
+  - ultimoPonto: Ponto
+  - inicioCaixa: Ponto
+  - selecaoAnterior: List<FormaGeometrica>
+  --
+  + aoPressionarMouse(...)
+  + aoArrastarMouse(...)
+  + aoSoltarMouse(...)
+}
+class FerramentaTransformar {
+  - modo: ModoFerramenta
+  - estadoInicial: Map<FormaGeometrica,FormaGeometrica>
+  - inicio/centro: Ponto
+  --
+  + aoPressionarMouse(...)
+  + aoArrastarMouse(...)
+  + cancelar(EditorContext)
+}
+class FerramentaEditarVertice {
+  - forma: Poligono
+  - indice: int
+  --
+  + aoPressionarMouse(...)
+  + aoArrastarMouse(...)
+  + aoSoltarMouse(...)
+  + cancelar(EditorContext)
+}
+EditorContext o-- Ferramenta
+EditorContext --> ModoFerramenta
+FerramentaDesenhar ..|> Ferramenta
+FerramentaInserirForma ..|> Ferramenta
+FerramentaSelecionar ..|> Ferramenta
+FerramentaTransformar ..|> Ferramenta
+FerramentaEditarVertice ..|> Ferramenta
+@enduml

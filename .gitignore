@@ -1,0 +1,10 @@
+/target/
+/tmp/
+/.idea/
+/.vscode/
+*.iml
+*.class
+/provisorio/*
+!/provisorio/trabalho_n2.pdf
+!/provisorio/diagrama_classes.pdf
+/entrega/

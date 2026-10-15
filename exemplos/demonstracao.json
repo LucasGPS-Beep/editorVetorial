@@ -1,0 +1,118 @@
+{
+  "versao": 1,
+  "canvas": {
+    "largura": 880,
+    "altura": 600,
+    "gradeMagnetica": false
+  },
+  "formas": [
+    {
+      "tipo": "Quadrado",
+      "pontos": [
+        {
+          "x": 120,
+          "y": 120
+        },
+        {
+          "x": 220,
+          "y": 120
+        },
+        {
+          "x": 220,
+          "y": 220
+        },
+        {
+          "x": 120,
+          "y": 220
+        }
+      ],
+      "preenchimento": "#8B9CF7",
+      "borda": "#24304A",
+      "espessuraBorda": 2,
+      "groupId": "grupo-demo"
+    },
+    {
+      "tipo": "Circulo",
+      "pontos": [
+        {
+          "x": 360,
+          "y": 170
+        },
+        {
+          "x": 410,
+          "y": 170
+        },
+        {
+          "x": 385,
+          "y": 220
+        }
+      ],
+      "preenchimento": "#D4A5F8",
+      "borda": "#24304A",
+      "espessuraBorda": 2,
+      "groupId": "grupo-demo"
+    },
+    {
+      "tipo": "Hexagono",
+      "pontos": [
+        {
+          "x": 660.0,
+          "y": 170.0
+        },
+        {
+          "x": 630.0,
+          "y": 221.96152422706632
+        },
+        {
+          "x": 570.0,
+          "y": 221.96152422706632
+        },
+        {
+          "x": 540.0,
+          "y": 170.0
+        },
+        {
+          "x": 570.0,
+          "y": 118.0384757729337
+        },
+        {
+          "x": 630.0,
+          "y": 118.03847577293368
+        }
+      ],
+      "preenchimento": "#80CFA9",
+      "borda": "#24304A",
+      "espessuraBorda": 2,
+      "groupId": null
+    },
+    {
+      "tipo": "Poligono",
+      "pontos": [
+        {
+          "x": 140,
+          "y": 380
+        },
+        {
+          "x": 260,
+          "y": 320
+        },
+        {
+          "x": 240,
+          "y": 390
+        },
+        {
+          "x": 330,
+          "y": 430
+        },
+        {
+          "x": 210,
+          "y": 450
+        }
+      ],
+      "preenchimento": "#F29AB2",
+      "borda": "#24304A",
+      "espessuraBorda": 2,
+      "groupId": null
+    }
+  ]
+}
